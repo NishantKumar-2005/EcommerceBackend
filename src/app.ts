@@ -3,6 +3,7 @@ import express from 'express';
 // Import the UserRoutes from the routes/user.js file
 import UserRoutes from './routes/user.js';
 import { connectDB } from './utils/features.js';
+import { errorMiddelware } from './middlewares/error.js';
 
 
 
@@ -18,6 +19,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/user', UserRoutes);
+
+app.use(errorMiddelware);
 
 
 app.listen(port, () => {
