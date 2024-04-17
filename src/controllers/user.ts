@@ -26,23 +26,42 @@ export const newUser = TryCatch(
             status: "success",
             message: "User created successfully",
         });
+})
 
-    })
+export const getAllUsers = TryCatch(async (req: Request, res: Response) => {
+    const users = await User.find({});
 
-
-export const getUsers = TryCatch(
-    async (req: Request<{}, {}, NewUserRequestBody>, res: Response, next: NextFunction) => {
-
-        let users = await User.find({});
-        if (users) {
-            return res.status(201).json({
-                status: "success",
-                users,
-            });
-        }
-        return res.status(201).json({
-            status: "success",
-            message: "User fetched successfully",
+    if (!users) {
+        return res.status(404).json({
+            status: "fail",
+            message: "No users found",
         });
+    }
+    return res.status(200).json({
+        status: "success",
+        users,
+    });
+});
 
-    })
+export const getUserById = TryCatch(async (req: Request, res: Response, next: NextFunction) => {
+    const user= await User.findById(req.params.id);
+    if(!user){
+        return next(new ErrorHandling("No user found with that ID",404));
+    }
+    return res.status(200).json({
+        status: "success",
+        user,
+    });
+});
+export const deleteUserById = TryCatch(async (req: Request, res: Response, next: NextFunction) => {
+    const user= await User.findById(req.params.id);
+    if(!user){
+        return next(new ErrorHandling("No user found with that ID",404));
+    }
+    user.deleteOne();
+
+    return res.status(200).json({
+        status: "success",
+        message: "User deleted successfully",
+    });
+});

@@ -1,10 +1,17 @@
-import { adminOnly } from '../middlewares/auth.js';
 import express from "express";
-import { getUsers, newUser } from "../controllers/user.js";
+import { deleteUserById, getAllUsers, getUserById, newUser } from "../controllers/user.js";
+import { adminAuth } from "../middlewares/auth.js";
 
 const app=express.Router();
 
+// to crate a new user
 app.post("/new",newUser);
-app.get("/getAll",adminOnly,getUsers)
+app.get("/getAll",adminAuth,getAllUsers)
+
+// to get all users
+app.get("/all",adminAuth,getAllUsers);
+
+//to get a user by id
+app.route("/:id").get(getUserById).delete(adminAuth,deleteUserById);
 
 export default app;

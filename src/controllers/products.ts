@@ -106,7 +106,6 @@ export const updateProduct = TryCatch(async (req, res, next) => {
 
 export const deleteProduct = TryCatch(async (req, res, next) => {
     const product = await Product.findById(req.params.id);
-    console.log(product)
     if (!product) return next(new ErrorHandling("Product not found ", 400));
     rm(product.photo!, () => {
         console.log("Product photo deleted");
