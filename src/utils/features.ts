@@ -2,8 +2,9 @@ import mongoose from "mongoose";
 
 export const connectDB = async () => {
     try {
-        const conn = await mongoose.connect("mongodb+srv://nishant114999:52UGspyZF7cyIg5N@cluster0.tnbnipx.mongodb.net/", {
-            dbName:"ecommerce24",
+        const uri = process.env.MONGO_URI || "mongodb+srv://nishant114999:52UGspyZF7cyIg5N@cluster0.tnbnipx.mongodb.net/";
+        const conn = await mongoose.connect(uri, {
+            dbName: "ecommerce24",
         });
         console.log(`MongoDB connected: ${conn.connection.host}`);
     } catch (error) {
