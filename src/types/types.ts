@@ -1,3 +1,4 @@
+import exp from "constants";
 import { NextFunction, Request, Response } from "express";
 
 export interface NewUserRequestBody {
@@ -38,4 +39,35 @@ export interface baseQuery {
     };
     category?: string;
 
+}
+export type invalidateCacheType = {
+    products?:boolean;
+    order?:boolean;
+    admin?:boolean;}
+
+
+export type shippingInfo={
+    address :string,
+    city :string,
+    state :string,
+    pincode :number,
+
+}
+export type orderItems={    
+        name:string,
+        photo:string,
+        price:number,
+        quantity:number,
+        productId:string,
+}
+export interface NewOrderRequestBody {
+    shippingInfo:shippingInfo,
+    user:string,
+    subtotal:number,
+    shippingCharges:number,
+    tax:number,
+    discount:number,
+    total:number,
+    status:string,
+    orderItems:orderItems[];
 }

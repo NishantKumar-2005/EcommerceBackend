@@ -1,22 +1,32 @@
 import express from 'express';
-
 // Import the UserRoutes from the routes/user.js file
 import UserRoutes from './routes/user.js';
 import ProductRoutes from './routes/products.js';
+import OrderRoutes from './routes/orders.js';
 import { connectDB } from './utils/features.js';
 import { errorMiddelware } from './middlewares/error.js';
 import { config } from 'dotenv';
+import NodeCache from 'node-cache';
+import morgan from 'morgan';
 
 
 
 const app = express();
 
-config();
-app.use(express.json());
+config({
+  path: "ecommerce-backend/src/.env",
+});
+
 const port = process.env.PORT || 8000;
+const URI = process.env.MONGO_URI || "mongodb+srv://nishant114999:52UGspyZF7cyIg5N@cluster0.tnbnipx.mongodb.net/";
+
+app.use(express.json());
+app.use(morgan('dev'));
 
 
-connectDB();
+export const myCache = new NodeCache();
+
+connectDB(URI);
 
 app.get('/', (req, res) => {
   res.send('Hello World');
@@ -24,6 +34,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/user', UserRoutes);
 app.use('/api/v1/product', ProductRoutes);
+app.use('/api/v1/order', OrderRoutes);
 
 app.use("/uploads",express.static("uploads"));
 app.use(errorMiddelware);
