@@ -43,7 +43,11 @@ export interface baseQuery {
 export type invalidateCacheType = {
     products?:boolean;
     order?:boolean;
-    admin?:boolean;}
+    admin?:boolean;
+    user?:string;
+    orderId?:string;
+    productId?:string | string[];
+}
 
 
 export type shippingInfo={
