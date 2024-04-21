@@ -3,6 +3,7 @@ import express from 'express';
 import UserRoutes from './routes/user.js';
 import ProductRoutes from './routes/products.js';
 import OrderRoutes from './routes/orders.js';
+import PaymentRoutes from './routes/payment.js';
 import { connectDB } from './utils/features.js';
 import { errorMiddelware } from './middlewares/error.js';
 import { config } from 'dotenv';
@@ -35,6 +36,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/user', UserRoutes);
 app.use('/api/v1/product', ProductRoutes);
 app.use('/api/v1/order', OrderRoutes);
+app.use('/api/v1/payment', PaymentRoutes);
 
 app.use("/uploads",express.static("uploads"));
 app.use(errorMiddelware);
