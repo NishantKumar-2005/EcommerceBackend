@@ -73,7 +73,6 @@ export const newOrder = TryCatch(async (req: Request<{},{},NewOrderRequestBody>,
 
     const {shippingInfo,user,subtotal,shippingCharges,tax,total,discount,orderItems}=req.body;
 
-
     if(!shippingInfo || !user || !subtotal || !tax || !total || !orderItems){
         return next(new ErrorHandling("Please provide all the required fields",400));
     }

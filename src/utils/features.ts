@@ -46,3 +46,12 @@ export const reduce = async(orderItems : orderItems[]) =>{
         await product.save();
     }
 };
+
+
+export const calculatePercentange = (thisMonth:number,lastMonth:number)=>{
+    if(lastMonth === 0){
+        return thisMonth*100;
+    }
+    const percent = ((thisMonth - lastMonth)/lastMonth) * 100;
+    return Number(percent.toFixed(0));
+}
