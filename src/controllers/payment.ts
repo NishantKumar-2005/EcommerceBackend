@@ -1,6 +1,6 @@
-import { stripe } from "../app.js";
 import { Coupon } from "../models/coupon.js";
 import ErrorHandling, { TryCatch } from "../utils/utility.class.js";
+import { instance } from "../app.js";
 
 
 export const createPaymentIntent = TryCatch(async (req, res, next) => {
@@ -9,14 +9,16 @@ export const createPaymentIntent = TryCatch(async (req, res, next) => {
         return next(new ErrorHandling("Please Enter the amount", 400));
     }
 
-    const paymentIntent = await stripe.paymentIntents.create({
-        amount: Number(amount) * 100,
-        currency: "inr"
-    })
+    var options = {
+        amount: Number(amount* 100) ,
+        currency: "INR",
+    };
+    instance.orders.create(options, function (err, order) {
+        console.log(order)
+    });
 
-    res.status(201).json({
+    res.status(200).json({
         success: true,
-        clientSecret : paymentIntent.client_secret
     });
 })
 
