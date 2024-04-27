@@ -6,8 +6,8 @@ const app=express.Router();
 
 app.get("/stats",adminAuth,getDashboardstats);
 
-app.get("/pie",getPieChart);
-app.get("/bar",getBarChart);
-app.get("/line",getLineChart);
+app.get("/pie",adminAuth,getPieChart);
+app.get("/bar",adminAuth,getBarChart);
+app.get("/line",adminAuth,getLineChart);
 
 export default app;
